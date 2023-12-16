@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "362005280277-ltd6keg5dsb5tn88ulgsrejtrbdsku8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstone.trendfits",
+            "certificate_hash": "dc4749199bbb3d2e686f89f0cc11edc0272c65c8"
+          }
+        },
+        {
           "client_id": "362005280277-lbrer87gidd0kqvh9d56gcrac89vpfiu.apps.googleusercontent.com",
           "client_type": 3
         }
