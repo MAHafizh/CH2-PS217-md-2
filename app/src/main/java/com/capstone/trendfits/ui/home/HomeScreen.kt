@@ -27,11 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.capstone.trendfits.R
+import coil.compose.rememberAsyncImagePainter
 import com.capstone.trendfits.di.Injection
 import com.capstone.trendfits.model.ClothesOrder
 import com.capstone.trendfits.ui.ViewModelFactory
@@ -39,10 +38,12 @@ import com.capstone.trendfits.ui.components.HomeSection
 import com.capstone.trendfits.ui.components.Search
 import com.capstone.trendfits.ui.components.StateUi
 import com.capstone.trendfits.ui.components.WardrobeGrid
+import com.capstone.trendfits.ui.signin.UserData
 import com.capstone.trendfits.ui.theme.TrendFitsTheme
 
 @Composable
 fun HomeScreen(
+    userData: UserData?,
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
@@ -60,6 +61,7 @@ fun HomeScreen(
 
             is StateUi.Success -> {
                 ClothesContent(
+                    userData = userData,
                     clothesOrder = stateUi.data,
                     modifier = modifier,
                     navigateToDetail = navigateToDetail,
@@ -77,14 +79,13 @@ fun HomeScreen(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ClothesContent(
+    userData: UserData?,
     clothesOrder: List<ClothesOrder>,
     modifier: Modifier = Modifier,
     navigateToDetail: (Long) -> Unit,
     selectedTabIndex: Int,
     onTabSelected: (Int) -> Unit,
 ) {
-
-    val image = painterResource(id = R.drawable.profile)
 
     Scaffold {
         Column(
@@ -99,7 +100,7 @@ fun ClothesContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HomeSection(
-                    title = "Hi! Hafizh"
+                    title = "Hi, ${userData?.username}",
                 )
                 Box(
                     modifier = modifier
@@ -107,7 +108,7 @@ fun ClothesContent(
                         .clip(CircleShape)
                 ) {
                     Image(
-                        painter = image,
+                        painter = rememberAsyncImagePainter(userData?.profilePictureUrl),
                         contentDescription = "profile",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -178,6 +179,6 @@ fun ClothesContent(
 @Composable
 fun HomePreview() {
     TrendFitsTheme {
-        HomeScreen(navigateToDetail = { /* Define a dummy lambda function */ })
+//        HomeScreen(navigateToDetail = { /* Define a dummy lambda function */ })
     }
 }
