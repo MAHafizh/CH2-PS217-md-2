@@ -42,7 +42,7 @@ fun ClothesItem(
             text = title,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.secondaryContainer,
         )
     }
 

@@ -7,8 +7,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
@@ -26,8 +28,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -201,58 +205,64 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun BottomBar(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    NavigationBar(
-        modifier = modifier
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        val navigationItems = listOf(
-            NavigationItem(
-                title = stringResource(R.string.menu_home),
-                icon = Icons.Default.Home,
-                screen = Screen.Home
-            ),
-            NavigationItem(
-                title = stringResource(R.string.scan),
-                icon = Icons.Default.AddCircle,
-                screen = Screen.Scan
-            ),
-            NavigationItem(
-                title = stringResource(R.string.Favorite),
-                icon = Icons.Default.Favorite,
-                screen = Screen.Favorite
-            ),
-            NavigationItem(
-                title = stringResource(R.string.setting),
-                icon = Icons.Default.Settings,
-                screen = Screen.Setting
-            ),
-        )
-        navigationItems.map { item ->
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title
-                    )
-                },
-                label = { Text(item.title) },
-                selected = currentRoute == item.screen.route,
-                onClick = {
-                    navController.navigate(item.screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
-                }
+    TrendFitsTheme {
+        NavigationBar(
+            modifier = modifier
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(MaterialTheme.colorScheme.primary),
+        ) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            val navigationItems = listOf(
+                NavigationItem(
+                    title = stringResource(R.string.menu_home),
+                    icon = Icons.Default.Home,
+                    screen = Screen.Home
+                ),
+                NavigationItem(
+                    title = stringResource(R.string.scan),
+                    icon = Icons.Default.AddCircle,
+                    screen = Screen.Scan
+                ),
+                NavigationItem(
+                    title = stringResource(R.string.Favorite),
+                    icon = Icons.Default.Favorite,
+                    screen = Screen.Favorite
+                ),
+                NavigationItem(
+                    title = stringResource(R.string.setting),
+                    icon = Icons.Default.Settings,
+                    screen = Screen.Setting
+                ),
             )
+            navigationItems.map { item ->
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.title
+                        )
+                    },
+                    label = { Text(item.title) },
+                    selected = currentRoute == item.screen.route,
+                    onClick = {
+                        navController.navigate(item.screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
