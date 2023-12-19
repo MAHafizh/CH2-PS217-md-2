@@ -35,8 +35,6 @@ import com.capstone.trendfits.di.Injection
 import com.capstone.trendfits.model.ClothesOrder
 import com.capstone.trendfits.ui.ViewModelFactory
 import com.capstone.trendfits.ui.components.HomeSection
-import com.capstone.trendfits.ui.components.OutfitGrid
-import com.capstone.trendfits.ui.components.OutfitsDetailList
 import com.capstone.trendfits.ui.components.Search
 import com.capstone.trendfits.ui.components.StateUi
 import com.capstone.trendfits.ui.components.WardrobeGrid
@@ -50,8 +48,7 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
     ),
-    navigateToDetail: (Long) -> Unit,
-    navigateToOutfitDetail: (Long) -> Unit,
+    navigateToDetail: (Long) -> Unit
 ) {
 
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -68,7 +65,6 @@ fun HomeScreen(
                     clothesOrder = stateUi.data,
                     modifier = modifier,
                     navigateToDetail = navigateToDetail,
-                    navigateToOutfitDetail = navigateToOutfitDetail,
                     selectedTabIndex = selectedTabIndex
                 ) { index ->
                     selectedTabIndex = index
@@ -87,7 +83,6 @@ fun ClothesContent(
     clothesOrder: List<ClothesOrder>,
     modifier: Modifier = Modifier,
     navigateToDetail: (Long) -> Unit,
-    navigateToOutfitDetail: (Long) -> Unit,
     selectedTabIndex: Int,
     onTabSelected: (Int) -> Unit,
 ) {
@@ -163,15 +158,13 @@ fun ClothesContent(
                     )
                 }
                 1 -> {
-                    OutfitGrid(
-                        clothesOrder = clothesOrder,
-                        navigateToOutfitDetail = navigateToOutfitDetail
+                    Text(
+                        text = "Outfit",
                     )
                 }
                 2 -> {
-                    OutfitsDetailList(
-                        outfitsOrder = clothesOrder,
-                        navigateToOutfitDetail = navigateToOutfitDetail
+                    Text(
+                        text = "Category",
                     )
                 }
             }

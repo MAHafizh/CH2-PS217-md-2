@@ -43,7 +43,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.capstone.trendfits.ui.detail.DetailClothes
-import com.capstone.trendfits.ui.detail.DetailOutfits
 import com.capstone.trendfits.ui.favorite.FavoriteScreen
 import com.capstone.trendfits.ui.home.HomeScreen
 import com.capstone.trendfits.ui.navigation.NavigationItem
@@ -153,13 +152,6 @@ class MainActivity : ComponentActivity() {
                                                 rewardId
                                             )
                                         )
-                                    },
-                                    navigateToOutfitDetail = { outfitId ->
-                                        navController.navigate(
-                                            Screen.DetailOutfits.createRoute(
-                                                outfitId
-                                            )
-                                        )
                                     }
                                 )
                             }
@@ -197,28 +189,6 @@ class MainActivity : ComponentActivity() {
                                 val id = it.arguments?.getLong("clothesId") ?: -1L
                                 DetailClothes(
                                     clothesId = id,
-                                    navigateBack = {
-                                        navController.navigateUp()
-                                    },
-                                )
-                            }
-                            composable(
-                                route = Screen.DetailOutfits.route,
-                                arguments = listOf(navArgument("clothesId") {
-                                    type = NavType.LongType
-                                }),
-                            ) {
-                                val id = it.arguments?.getLong("clothesId") ?: -1L
-                                DetailOutfits(
-                                    clothesId = id,
-                                    clothesOrder = emptyList(),
-                                    navigateToOutfitDetail = { outfitId ->
-                                        navController.navigate(
-                                            Screen.DetailOutfits.createRoute(
-                                                outfitId
-                                            )
-                                        )
-                                    },
                                     navigateBack = {
                                         navController.navigateUp()
                                     },
