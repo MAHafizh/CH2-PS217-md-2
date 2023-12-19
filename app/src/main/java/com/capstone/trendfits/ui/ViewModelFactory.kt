@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.trendfits.repo.Repository
 import com.capstone.trendfits.ui.detail.DetailClothesViewModel
+import com.capstone.trendfits.ui.favorite.FavoriteScreenViewModel
 import com.capstone.trendfits.ui.home.HomeScreenViewModel
 
 class ViewModelFactory(private val repository: Repository) :
@@ -15,6 +16,8 @@ class ViewModelFactory(private val repository: Repository) :
             return HomeScreenViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(DetailClothesViewModel::class.java)) {
             return DetailClothesViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(FavoriteScreenViewModel::class.java)) {
+            return FavoriteScreenViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
