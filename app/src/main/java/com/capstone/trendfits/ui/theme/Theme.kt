@@ -10,21 +10,35 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+val Cream = Color(0xFFDCD7C9)
+val Choco = Color(0xFFA27B5C)
+val Navy = Color(0xFF3F4E4F)
+val DarkNavy = Color(0xFF2C3639)
+
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Cream,
+    secondary = Navy,
+    tertiary = Choco,
+    secondaryContainer = Cream,
+    onSecondaryContainer = Choco,
+    onSurface = Cream,
+    onSurfaceVariant = cream,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Navy,
+    secondary = Choco,
+    tertiary = cream,
+    secondaryContainer = DarkNavy,
+    onSecondaryContainer = Cream,
+    onSurface = Navy,
+    onSurfaceVariant = darkNavy,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -40,7 +54,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun TrendFitsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

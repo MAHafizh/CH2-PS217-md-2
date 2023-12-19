@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,12 +71,18 @@ fun Scan() {
                 Toast.LENGTH_LONG
             ).show()
         }) {
-            Text(text = "Availability")
+            Text(
+                text = "Availability",
+                color = MaterialTheme.colorScheme.background
+            )
         }
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
         }) {
-            Text(text = "Upload")
+            Text(
+                text = "Availability",
+                color = MaterialTheme.colorScheme.background
+            )
         }
     }
 }
