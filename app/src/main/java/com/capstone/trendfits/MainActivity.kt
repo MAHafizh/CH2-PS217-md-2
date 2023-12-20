@@ -81,7 +81,12 @@ class MainActivity : ComponentActivity() {
 
                     Scaffold(
                         bottomBar = {
-                            if (currentRoute != Screen.SignIn.route) {
+                            val shouldShowBottomBar = currentRoute !in listOf(
+                                Screen.DetailClothes.route,
+                                Screen.DetailOutfits.route,
+                                Screen.SignIn.route
+                            )
+                            if (shouldShowBottomBar) {
                                 BottomBar(navController)
                             }
                         },
@@ -147,10 +152,10 @@ class MainActivity : ComponentActivity() {
                             composable(Screen.Home.route) {
                                 HomeScreen(
                                     userData = googleAuthUiClient.getSignedInUser(),
-                                    navigateToDetail = { rewardId ->
+                                    navigateToDetail = { clothesId ->
                                         navController.navigate(
                                             Screen.DetailClothes.createRoute(
-                                                rewardId
+                                                clothesId
                                             )
                                         )
                                     },
@@ -169,6 +174,13 @@ class MainActivity : ComponentActivity() {
                             composable(Screen.Favorite.route) {
                                 FavoriteScreen(
                                     userData = googleAuthUiClient.getSignedInUser(),
+                                    navigateToDetail = { clothesId ->
+                                        navController.navigate(
+                                            Screen.DetailClothes.createRoute(
+                                                clothesId
+                                            )
+                                        )
+                                    }
                                 )
                             }
                             composable(Screen.Setting.route) {
@@ -202,28 +214,28 @@ class MainActivity : ComponentActivity() {
                                     },
                                 )
                             }
-                            composable(
-                                route = Screen.DetailOutfits.route,
-                                arguments = listOf(navArgument("clothesId") {
-                                    type = NavType.LongType
-                                }),
-                            ) {
-                                val id = it.arguments?.getLong("clothesId") ?: -1L
-                                DetailOutfits(
-                                    clothesId = id,
-                                    clothesOrder = emptyList(),
-                                    navigateToOutfitDetail = { outfitId ->
-                                        navController.navigate(
-                                            Screen.DetailOutfits.createRoute(
-                                                outfitId
-                                            )
-                                        )
-                                    },
-                                    navigateBack = {
-                                        navController.navigateUp()
-                                    },
-                                )
-                            }
+//                            composable(
+//                                route = Screen.DetailOutfits.route,
+//                                arguments = listOf(navArgument("clothesId") {
+//                                    type = NavType.LongType
+//                                }),
+//                            ) {
+//                                val id = it.arguments?.getLong("clothesId") ?: -1L
+//                                DetailOutfits(
+//                                    clothesId = id,
+//                                    clothesOrder = emptyList(),
+//                                    navigateToOutfitDetail = { outfitId ->
+//                                        navController.navigate(
+//                                            Screen.DetailOutfits.createRoute(
+//                                                outfitId
+//                                            )
+//                                        )
+//                                    },
+//                                    navigateBack = {
+//                                        navController.navigateUp()
+//                                    },
+//                                )
+//                            }
                         }
                     }
                 }

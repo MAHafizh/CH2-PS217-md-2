@@ -1,5 +1,6 @@
 package com.capstone.trendfits.ui.favorite
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,23 +12,61 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.trendfits.R
+import com.capstone.trendfits.di.Injection
+import com.capstone.trendfits.model.ClothesOrder
+import com.capstone.trendfits.ui.ViewModelFactory
+import com.capstone.trendfits.ui.components.FavoriteGrid
+import com.capstone.trendfits.ui.components.StateUi
 import com.capstone.trendfits.ui.signin.UserData
-
+@SuppressLint("ModifierParameter")
 @Composable
 fun FavoriteScreen(
     userData: UserData?,
-    modifier: Modifier = Modifier
+    viewModel: FavoriteScreenViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    ),
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Long) -> Unit,
 ) {
+    viewModel.stateUi.collectAsState(initial = StateUi.Loading).value.let { stateUi ->
+        when (stateUi) {
+            is StateUi.Loading -> {
+                viewModel.getAllClothes()
+            }
+
+            is StateUi.Success -> {
+                FavoriteContent(
+                    userData = userData,
+                    favorites = stateUi.data,
+                    modifier = modifier,
+                    navigateToDetail = navigateToDetail,
+                )
+            }
+
+            is StateUi.Error -> {}
+        }
+    }
+}
+
+@Composable
+fun FavoriteContent(
+    userData: UserData?,
+    favorites: List<ClothesOrder>,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (Long) -> Unit,
+){
     Scaffold {
-        innerPadding ->
+            innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -57,6 +96,10 @@ fun FavoriteScreen(
             Text(
                 text = userData?.username.toString(),
                 modifier = modifier.padding(top = 8.dp, bottom = 20.dp)
+            )
+            FavoriteGrid(
+                clothesOrder = favorites,
+                navigateToDetail = navigateToDetail
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.capstone.trendfits.ui.home
+package com.capstone.trendfits.ui.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel(
+class FavoriteScreenViewModel (
     private val repository: Repository
 ) : ViewModel() {
     private val _stateUi: MutableStateFlow<StateUi<List<ClothesOrder>>> = MutableStateFlow(StateUi.Loading)

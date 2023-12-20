@@ -80,7 +80,7 @@ fun Scan() {
         Button(onClick = {
         }) {
             Text(
-                text = "Availability",
+                text = "Upload",
                 color = MaterialTheme.colorScheme.background
             )
         }

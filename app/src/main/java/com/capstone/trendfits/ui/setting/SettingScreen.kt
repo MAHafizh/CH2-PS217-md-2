@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.capstone.trendfits.R
-import com.capstone.trendfits.ui.components.SettingItem
 import com.capstone.trendfits.ui.signin.UserData
 import com.capstone.trendfits.ui.theme.TrendFitsTheme
 
@@ -63,12 +62,12 @@ fun SettingScreen(
                 text = userData?.username.toString(),
                 modifier = modifier.padding(top = 8.dp, bottom = 20.dp)
             )
-            SettingItem(
-                title = "Edit Profile", modifier = modifier.padding(bottom = 16.dp)
-            )
-            SettingItem(
-                title = "Log Out"
-            )
+//            SettingItem(
+//                title = "Edit Profile", modifier = modifier.padding(bottom = 16.dp)
+//            )
+//            SettingItem(
+//                title = "Log Out"
+//            )
             Button(onClick = onSignOut) {
                 Text(text = "Sign out")
             }

@@ -3,6 +3,7 @@ package com.capstone.trendfits.repo
 import com.capstone.trendfits.model.ClothesOrder
 import com.capstone.trendfits.model.DataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 class Repository {
@@ -21,13 +22,11 @@ class Repository {
         return flowOf(clothesOrder)
     }
 
-    fun getClothesById(filmId: Long): ClothesOrder {
+    fun getClothesById(clothesId: Long): ClothesOrder {
         return clothesOrder.first {
-            it.clothes.id == filmId
+            it.clothes.id == clothesId
         }
     }
-
-
 
 
     companion object {
